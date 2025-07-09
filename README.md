@@ -19,6 +19,7 @@ npm run build
 ```
 npm run lint
 ```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### Run project with styles for test 
+```
+npm run start
+```

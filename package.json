@@ -4,10 +4,15 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
+    "styling":"npx @tailwindcss/cli -i src/assets/styles/input.css -o src/assets/styles/output.css",
+    "start": "npm run styling && npm run serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "pinia": "^3.0.3",
+    "tailwindcss": "^4.1.11",
     "vue": "^3.2.13"
   },
   "devDependencies": {
