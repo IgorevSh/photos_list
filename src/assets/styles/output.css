@@ -249,14 +249,14 @@
   .h-\[50px\] {
     height: 50px;
   }
+  .h-\[548px\] {
+    height: 548px;
+  }
   .h-\[600px\] {
     height: 600px;
   }
   .max-h-\[90vh\] {
     max-height: 90vh;
-  }
-  .max-h-\[600px\] {
-    max-height: 600px;
   }
   .min-h-screen {
     min-height: 100vh;
@@ -273,6 +273,9 @@
   .w-\[80px\] {
     width: 80px;
   }
+  .w-\[600px\] {
+    width: 600px;
+  }
   .w-full {
     width: 100%;
   }
@@ -284,9 +287,6 @@
   }
   .max-w-md {
     max-width: var(--container-md);
-  }
-  .min-w-\[600px\] {
-    min-width: 600px;
   }
   .min-w-full {
     min-width: 100%;

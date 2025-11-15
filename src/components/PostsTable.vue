@@ -1,6 +1,6 @@
 <template>
   <div
-    class="overflow-x-hidden max-h-[600px] min-w-[600px] mx-auto overflow-auto border border-gray-200 rounded-lg scrollbar"
+    class="bg-gray-50 dark:bg-gray-800 overflow-x-hidden h-[600px] w-[600px] mx-auto overflow-auto border border-gray-200 rounded-lg scrollbar"
     @scroll="handleScroll"
   >
     <table class="min-w-full divide-y divide-gray-200">
@@ -21,9 +21,7 @@
           </th>
         </tr>
       </thead>
-      <tbody
-        class="h-[600px] bg-white dark:bg-gray-700 divide-y divide-gray-200"
-      >
+      <tbody class="bg-white dark:bg-gray-700 divide-y divide-gray-200">
         <tr
           v-for="post in PS.sortedPosts"
           :key="post.id"
@@ -61,7 +59,10 @@
           </tr>
         </template>
 
-        <tr v-else-if="PS.sortedPosts.length === 0 && !rowsLoading">
+        <tr
+          v-else-if="PS.sortedPosts.length === 0 && !rowsLoading"
+          class="h-[548px]"
+        >
           <td colspan="4" class="p-3 text-center text-gray-500">
             Записей не найдено
           </td>
