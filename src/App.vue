@@ -5,18 +5,18 @@
       <h1
         class="text-2xl mb-4 font-bold text-center text-gray-800 dark:text-gray-50"
       >
-        Просмотр фотографий
+        Просмотр постов
       </h1>
 
       <div class="flex mb-4 gap-4">
         <input
-          v-model="albumIdsInput"
+          v-model="PS.searchQuery"
           type="text"
-          placeholder="Введите ID альбомов через пробел (например: 1 2 3)"
+          placeholder="Поиск по заголовку"
           class="flex-1 px-4 py-2 dark:text-gray-300 border border-gray-200 dark:border-gray-50 rounded-md focus:outline-none focus:border-blue-500"
         />
         <button
-          @click="searchPhotos"
+          @click="searchPosts"
           :disabled="PS.loading"
           class="flex justify-center w-[80px] px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed items-center"
         >
@@ -45,54 +45,52 @@
           <span v-else>Поиск</span>
         </button>
       </div>
-
       <div
         v-if="PS.error"
         class="p-4 bg-red-100 border border-red-400 text-red-700 rounded"
       >
         Ошибка: {{ PS.error }}
       </div>
-
-      <PhotosTable
-        :photos="PS.visiblePhotos"
-        :sort-field="PS.sortField"
-        :sort-direction="PS.sortDirection"
-        :loading="PS.loading"
-        @sort="handleSort"
-        @load-more="handleLoadMore"
+      <PostsTable @open-user-card="openUserCard" />
+      <UserCard
+        :is-open="isUserCardOpen"
+        :user-email="selectedUserEmail"
+        @close="closeUserCard"
       />
     </div>
   </div>
 </template>
 <script setup>
 import { ref, onMounted } from "vue";
-import { usePhotosStore } from "./stores/photos";
-import PhotosTable from "./components/PhotosTable.vue";
+import { usePostsStore } from "@/stores/posts.js";
+import { useUserStore } from "@/stores/users.js";
 import ThemeToggle from "@/components/ThemeToggle.vue";
+import PostsTable from "@/components/PostsTable.vue";
+import UserCard from "@/components/UserCard.vue";
+const PS = usePostsStore();
+const US = useUserStore();
 
-const PS = usePhotosStore();
-const albumIdsInput = ref(
-  JSON.parse(localStorage.getItem("albumIds"))?.join(" ") || ""
-);
+const isUserCardOpen = ref(false);
+const selectedUserEmail = ref("");
 
-const searchPhotos = () => {
-  const ids = albumIdsInput.value
-    .split(" ")
-    .map((id) => id.trim())
-    .filter((id) => id !== "");
-  PS.fetchPhotos(ids);
+const searchPosts = () => {
+  PS.fetchPosts(PS.searchQuery);
 };
 
-const handleSort = (field) => {
-  PS.sortBy(field);
+const openUserCard = (email) => {
+  selectedUserEmail.value = email;
+  isUserCardOpen.value = true;
+  US.addUserWatched(email);
 };
 
-const handleLoadMore = () => {
-  PS.loadMore();
+const closeUserCard = () => {
+  isUserCardOpen.value = false;
+  selectedUserEmail.value = "";
 };
 
-onMounted(() => {
-  PS.fetchPhotos();
+onMounted(async () => {
+  await US.fetchUsers();
+  await PS.fetchPosts();
 });
 </script>
 

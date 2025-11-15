@@ -1,11 +1,12 @@
 {
-  "name": "photos_list",
+  "name": "posts_list",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "styling":"npx @tailwindcss/cli -i src/assets/styles/input.css -o src/assets/styles/output.css",
     "start": "npm run styling && npm run serve",
+    "deploy": "npm run styling && npm run build",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
