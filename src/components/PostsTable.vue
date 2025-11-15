@@ -47,7 +47,7 @@
           </td>
         </tr>
 
-        <template v-if="PS.loading">
+        <template v-if="rowsLoading">
           <tr v-for="i in 30" :key="`skeleton-${i}`">
             <td
               v-for="column in columns"
@@ -61,7 +61,7 @@
           </tr>
         </template>
 
-        <tr v-else-if="PS.sortedPosts.length === 0 && !PS.loading">
+        <tr v-else-if="PS.sortedPosts.length === 0 && !rowsLoading">
           <td colspan="4" class="p-3 text-center text-gray-500">
             Записей не найдено
           </td>
@@ -74,7 +74,7 @@
 <script setup>
 import { usePostsStore } from "@/stores/posts.js";
 import { useUserStore } from "@/stores/users.js";
-import { defineEmits } from "vue";
+import { defineEmits, computed } from "vue";
 
 const emit = defineEmits(["openUserCard"]);
 const PS = usePostsStore();
@@ -97,7 +97,9 @@ const columns = [
     label: "Контент",
   },
 ];
-
+const rowsLoading = computed(() => {
+  return PS.loading || US.loading;
+});
 const userIncludes = (email) => {
   return [...US.watchedUsers].includes(email?.toLowerCase());
 };
