@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gray-50 dark:bg-gray-800 py-8 px-4">
+  <div class="min-h-screen bg-gray-50 dark:bg-gray-800 py-6 px-4">
     <theme-toggle />
     <div class="max-w-[600px] mx-auto">
       <h1
